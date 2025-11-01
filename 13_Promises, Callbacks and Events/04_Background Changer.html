@@ -28,23 +28,24 @@
 	{
       radio.addEventListener('change', function() 
 	  {
-        if (this.id === 'black') 
+        if (this.id === 'white') 
+		{
+			document.body.style.backgroundColor = 'hsl(0, 0%, 90%)';
+			document.body.style.color = 'hsl(0 ,0%, 5%)';
+        } 
+        else if (this.id === 'black') 
 		{
 			document.body.style.backgroundColor = 'hsl(0, 0%, 5%)';
-			document.body.style.color = 'white';
-        } 
-        else if (this.id === 'white') 
-		{
-			document.body.style.backgroundColor = 'hsl(0, 0%, 85%)';
-			document.body.style.color = 'black';
+			document.body.style.color = 'hsl(0, 0%, 90%)';
         } 
         else if (this.id === 'bluegray') 
 		{
 			document.body.style.backgroundColor = 'hsl(240, 15%, 15%)';
-			document.body.style.color = 'white';
+			document.body.style.color = 'hsl(0%, 0%, 85%)';
         }
       });
     });
 </script>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at turpis eget erat sagittis bibendum vel eget tellus. Suspendisse varius facilisis ipsum. Praesent maximus, sapien eu blandit pretium, nibh erat placerat urna, ac placerat diam est sed mauris. Nunc interdum velit et nibh blandit, in laoreet libero sollicitudin. Praesent efficitur eleifend quam eu ultrices. Duis efficitur nisi sed elit imperdiet dignissim. Vestibulum scelerisque elementum lacus at tempus. Proin nec lacinia mauris. Maecenas id bibendum mauris, nec aliquam ex. Nulla purus nisi, tincidunt vitae ante at, efficitur eleifend velit. Proin vel ipsum vel tellus vestibulum suscipit et sit amet felis. Pellentesque libero velit, commodo porttitor rutrum et, blandit nec erat. Sed consequat imperdiet leo. Integer enim tortor, bibendum eu semper quis, porttitor vitae erat.</p>
 </body>
 </html>
