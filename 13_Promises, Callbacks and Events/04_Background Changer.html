@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Background Color Changer</title>
+<style>
+	body
+	{
+		color: hsl(0, 0%, 90%);
+		background-color: hsl(233, 100%, 50%);
+		font-family: 'Trebuchet MS';
+	}
+</style>
+</head>
+<body>
+<h2>Please Select Background Color</h2>
+<form>
+	<input type = "radio" id = "white" name = "bckgrndclr">
+	<label for = "white">White</label><br>
+	<input type = "radio" id = "black" name = "bckgrndclr">
+	<label for = "black">Black</label><br>
+	<input type = "radio" id = "bluegray" name = "bckgrndclr">
+	<label for = "bluegray">Blue-Gray</label><br>
+</form>
+<script>
+	const selectedColor = document.querySelectorAll('input[name="bckgrndclr"]');
+
+    selectedColor.forEach((radio) => 
+	{
+      radio.addEventListener('change', function() 
+	  {
+        if (this.id === 'black') 
+		{
+			document.body.style.backgroundColor = 'hsl(0, 0%, 5%)';
+			document.body.style.color = 'white';
+        } 
+        else if (this.id === 'white') 
+		{
+			document.body.style.backgroundColor = 'hsl(0, 0%, 85%)';
+			document.body.style.color = 'black';
+        } 
+        else if (this.id === 'bluegray') 
+		{
+			document.body.style.backgroundColor = 'hsl(240, 15%, 15%)';
+			document.body.style.color = 'white';
+        }
+      });
+    });
+</script>
+</body>
+</html>
