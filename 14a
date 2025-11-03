@@ -1,0 +1,51 @@
+// Observer Pattern Implementation
+
+// The "Subject" — maintains a list of observers and notifies them of changes
+class NewsPublisher {
+  constructor() {
+    this.subscribers = []; // list of observer functions
+  }
+
+  // Add a new subscriber (observer)
+  subscribe(subscriber) {
+    this.subscribers.push(subscriber);
+    console.log(`✅ Subscribed: ${subscriber.name || 'Anonymous Subscriber'}`);
+  }
+
+  // Remove a subscriber
+  unsubscribe(subscriber) {
+    this.subscribers = this.subscribers.filter(sub => sub !== subscriber);
+    console.log(`🚫 Unsubscribed: ${subscriber.name || 'Anonymous Subscriber'}`);
+  }
+
+  // Notify all subscribers of a new update
+  notify(news) {
+    console.log(`📰 Publishing News: "${news}"`);
+    this.subscribers.forEach(sub => sub(news));
+  }
+}
+
+// Example subscriber functions (observers)
+function subscriberA(news) {
+  console.log(`Subscriber A received: ${news}`);
+}
+
+function subscriberB(news) {
+  console.log(`Subscriber B received: ${news}`);
+}
+
+// Example Usage
+const publisher = new NewsPublisher();
+
+// Subscribing to updates
+publisher.subscribe(subscriberA);
+publisher.subscribe(subscriberB);
+
+// Publishing news
+publisher.notify("Breaking: Observer Pattern Implemented Successfully!");
+
+// Unsubscribing one subscriber
+publisher.unsubscribe(subscriberB);
+
+// Publishing another update
+publisher.notify("Update: Only Subscriber A should receive this.");
