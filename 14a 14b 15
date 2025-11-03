@@ -1,0 +1,298 @@
+// 14A - Observer Pattern Implementation
+
+class NewsPublisher {
+  constructor() {
+    this.subscribers = [];
+  }
+
+  subscribe(subscriber) {
+    this.subscribers.push(subscriber);
+    console.log(`Subscribed: ${subscriber.name || 'Anonymous Subscriber'}`);
+  }
+
+  unsubscribe(subscriber) {
+    this.subscribers = this.subscribers.filter(sub => sub !== subscriber);
+    console.log(`Unsubscribed: ${subscriber.name || 'Anonymous Subscriber'}`);
+  }
+
+  notify(news) {
+    console.log(`News Website: "${news}"`);
+    this.subscribers.forEach(sub => sub(news));
+  }
+}
+
+function subscriberA(news) {
+  console.log(`Subscriber A received: ${news}`);
+}
+
+function subscriberB(news) {
+  console.log(`Subscriber B received: ${news}`);
+}
+
+// From here
+const publisher = new NewsPublisher();
+
+publisher.subscribe(subscriberA);
+publisher.subscribe(subscriberB);
+
+publisher.notify("Test");
+
+publisher.unsubscribe(subscriberB);
+
+publisher.notify("Test");
+
+// 14B - Display Person
+function Person(name)
+{
+    this.name = name;
+}
+
+Person.prototype.introduction = function()
+{
+    console.log(`My name is ${this.name}`)
+}
+
+const a = new Person("John");
+const b = new Person("Arthur");
+
+a.introduction();
+b.introduction();
+
+// 15 - Task App
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List App</title>
+    <style>
+        body
+        {
+            font-family: Trebuchet MS, sans-serif;
+            background-color: hsl(240, 10%, 15%);
+            color: hsl(0, 0%, 90%);
+            margin: 40px;
+            zoom: 130%;
+            
+        }
+        input, button, select
+        {
+            font-family: Trebuchet MS;
+        }
+        h1
+        {
+            text-align: center;
+        } 
+
+        .container
+        {
+            max-width: 500px;
+            margin: auto;
+            background: hsl(240, 15%, 20%);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .container:hover
+        {
+            border: 3px solid hsl(240, 60%, 30%);
+            transition-duration: 400ms;
+        }
+
+        input, select, button
+        {
+            margin: 10px;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        ul
+        {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li
+        {
+            background: hsl(240, 20%, 10%);;
+            padding: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px;
+        }
+
+        li.completed
+        {
+            text-decoration: line-through;
+        }
+
+        .priority-high
+        {
+            border-left: 2px solid hsl(0, 100%, 40%);
+        }
+
+        .priority-medium
+        {
+            border-left: 2px solid hsl(30, 100%, 40%);
+        }
+
+        .priority-low
+        {
+            border-left: 2px solid hsl(140, 100%, 40%);
+        }
+
+        .filters
+        {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .filters select
+        {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <input type="text" id="taskInput" placeholder="Enter a new task">
+        <select id="prioritySelect">
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        </select>
+        <button id="addTaskBtn">Add Task</button>
+
+        <div class="filters">
+            <select id="filterPriority">
+                <option value="All">All Priorities</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+
+            <select id="filterStatus">
+                <option value="All">All Tasks</option>
+                <option value="Completed">Completed</option>
+                <option value="Pending">Pending</option>
+            </select>
+        </div>
+
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        const taskInput = document.getElementById("taskInput");
+        const prioritySelect = document.getElementById("prioritySelect");
+        const addTaskBtn = document.getElementById("addTaskBtn");
+        const taskList = document.getElementById("taskList");
+        const filterPriority = document.getElementById("filterPriority");
+        const filterStatus = document.getElementById("filterStatus");
+
+        let tasks = [];
+
+        function renderTasks()
+        {
+            taskList.innerHTML = "";
+
+            const filteredTasks = tasks.filter(task =>
+            {
+                const priorityMatch = filterPriority.value === "All" || task.priority === filterPriority.value;
+                const statusMatch = filterStatus.value === "All" ||
+                    (filterStatus.value === "Completed" && task.completed) ||
+                    (filterStatus.value === "Pending" && !task.completed);
+                return priorityMatch && statusMatch;
+            });
+
+            filteredTasks.forEach((task, index) =>
+            {
+                const li = document.createElement("li");
+                li.classList.add(`priority-${task.priority.toLowerCase()}`);
+                if (task.completed)
+                    li.classList.add("completed");
+
+                const text = document.createElement("span");
+                text.textContent = task.name;
+                text.style.flex = "1";
+                text.onclick = function()
+                {
+                    editTask(index);
+                };
+
+                const completeBtn = document.createElement("button");
+                completeBtn.textContent = task.completed ? "Undo" : "Complete";
+                completeBtn.onclick = function()
+                {
+                    toggleComplete(index);
+                };
+
+                const deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "Delete";
+                deleteBtn.onclick = function()
+                {
+                    deleteTask(index);
+                };
+
+                li.appendChild(text);
+                li.appendChild(completeBtn);
+                li.appendChild(deleteBtn);
+                taskList.appendChild(li);
+            });
+        }
+
+        function addTask()
+        {
+            const name = taskInput.value.trim();
+            const priority = prioritySelect.value;
+
+            if (name === "")
+            {
+                alert("Please enter a task name.");
+                return;
+            }
+
+            tasks.push
+            (
+                {
+                    name: name,
+                    priority: priority,
+                    completed: false
+                }
+            );
+
+            taskInput.value = "";
+            renderTasks();
+        }
+
+        function editTask(index)
+        {
+            const newName = prompt("Edit task name:", tasks[index].name);
+            if (newName !== null && newName.trim() !== "")
+            {
+                tasks[index].name = newName.trim();
+                renderTasks();
+            }
+        }
+
+        function toggleComplete(index)
+        {
+            tasks[index].completed = !tasks[index].completed;
+            renderTasks();
+        }
+
+        function deleteTask(index)
+        {
+            tasks.splice(index, 1);
+            renderTasks();
+        }
+
+        addTaskBtn.onclick = addTask;
+        filterPriority.onchange = renderTasks;
+        filterStatus.onchange = renderTasks;
+    </script>
+</body>
+</html>
