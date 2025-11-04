@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dynamic List Example</title>
+	<style>
+		body 
+		{
+			font-family: Trebuchet MS;
+			background-color: hsl(240, 15%, 10%);
+			color: hsl(0, 0%, 90%);
+			margin: 30px;
+		}
+		li 
+		{
+			background-color: hsl(0, 0%, 15%);
+			padding: 5px;
+			margin: 5px;
+			border-radius: 10px;
+		}
+		button 
+		{
+			padding: 10px;
+			background-color: hsl(140, 100%, 30%);
+			color: white;
+			border-radius: 5px;
+		}
+		button:hover
+		{
+			border: 2px dashed white;
+			transition-duration: 300ms;
+		}
+	</style>
+</head>
+<body>
+
+<h2>Dynamic List</h2>
+<ul id="itemList">
+</ul>
+<button id="newItemButton">Add New Item</button>
+
+<script>
+
+	const addButton = document.querySelector('#newItemButton');
+	const list = document.querySelector('#itemList');
+
+	addButton.addEventListener('click', () => 
+	{
+		const newItem = document.createElement('li');
+		newItem.textContent = "New Item";
+		newItem.addEventListener('click', () => 
+		{
+			const newName = prompt("What name: ", newItem.textContent);
+			if (newName !== null && newName.trim() !== "") newItem.textContent = newName;
+		});
+		list.appendChild(newItem);
+	});
+
+</script>
+
+</body>
+</html>
