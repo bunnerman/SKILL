@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Carousel</title>
+    <style>
+        body
+        {
+            font-family: Trebuchet MS;
+            background-color: hsl(240, 15%, 10%);
+            color: hsl(0, 0%, 90%);
+            margin: 40px;
+        }
+        .carousel
+        {
+            position: relative;
+            width: 500px;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .carousel img
+        {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+            border-radius: 10px;
+            transition: opacity 0.5s ease;
+        }
+        .carousel img.active
+        {
+            display: block;
+        }
+        .controls
+        {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        button
+        {
+            padding: 10px 15px;
+            background-color: hsl(210, 100%, 30%);
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+		.playBtn
+		{
+			background-color: hsl(140, 100%, 30%);
+		}
+		.pauseBtn
+		{
+			background-color: hsl(0, 100%, 30%);
+		}
+        button:hover
+        {
+            border: 2px solid white;
+            transition-duration: 300ms;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Interactive Image Carousel</h2>
+
+    <div class="carousel" id="carousel">
+        <img src="https://picsum.photos/id/1067/500/300" class="active">
+        <img src="https://picsum.photos/id/1039/500/300">
+        <img src="https://picsum.photos/id/1043/500/300">
+    </div>
+
+    <div class="controls">
+        <button id="prvBtn">Previous Button</button>
+        <button id="nextBtn">Next Image</button>
+        <button id="playBtn" class = "playBtn">Play</button>
+        <button id="pauseBtn" class = "pauseBtn">Pause</button>
+    </div>
+
+    <script>
+        const images = document.querySelectorAll('#carousel img');
+        const prvBtn = document.querySelector('#prvBtn');
+        const nextBtn = document.querySelector('#nextBtn');
+        const playBtn = document.querySelector('#playBtn');
+        const pauseBtn = document.querySelector('#pauseBtn');
+        const carousel = document.querySelector('#carousel');
+        let index = 0, autoplay = null, startX = 0, endX = 0;
+
+        function showImage(i)
+        {
+            images.forEach(img => img.classList.remove('active'));
+            images[i].classList.add('active');
+        }
+
+        nextBtn.addEventListener('click', () =>
+        {
+            index = (index + 1) % images.length;
+            showImage(index);
+			playBtn.style.border = "0px";
+			pauseBtn.style.border = "0px";
+        });
+
+        prvBtn.addEventListener('click', () =>
+        {
+            index = (index - 1 + images.length) % images.length;
+            showImage(index);
+			playBtn.style.border = "0px";
+			pauseBtn.style.border = "0px";
+        });
+
+        playBtn.addEventListener('click', () =>
+        {
+            if (!autoplay)
+            {
+                autoplay = setInterval(() =>
+                {
+                    index = (index + 1) % images.length;
+                    showImage(index);
+                }, 500);
+            }
+			playBtn.style.border = "2px solid white";
+			pauseBtn.style.border = "0px";
+        });
+
+        pauseBtn.addEventListener('click', () =>
+        {
+            clearInterval(autoplay);
+            autoplay = null;
+			pauseBtn.style.border = "2px solid white";
+			playBtn.style.border = "0px";
+        });
+
+        carousel.addEventListener('mouseover', () =>
+        {
+            carousel.style.border = "1px solid white";
+        });
+
+        carousel.addEventListener('mouseout', () =>
+        {
+            carousel.style.border = "0px";
+        });
+    </script>
+
+</body>
+</html>
