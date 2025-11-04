@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AJAX Form Submission</title>
+    <style>
+        body
+        {
+            font-family: Trebuchet MS;
+            background-color: hsl(240, 15%, 10%);
+            color: hsl(0, 0%, 90%);
+            margin: 60px;
+        }
+        h2
+        {
+            margin-bottom: 20px;
+        }
+        input, textarea
+        {
+            width: 300px;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: none;
+            background-color: hsl(0, 0%, 20%);
+            color: white;
+        }
+        button
+        {
+            padding: 10px 20px;
+            background-color: hsl(210, 100%, 30%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover
+        {
+            background-color: hsl(210, 100%, 40%);
+        }
+        .loading
+        {
+            color: hsl(45, 100%, 60%);
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .message
+        {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .warning
+        {
+            color: tomato;
+            font-size: 13px;
+            margin-top: -5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Contact Form</h2>
+    <form id="contactForm">
+        <input type="text" id="name" placeholder="Your Name"><br>
+        <input type="text" id="nickname" placeholder="Your Nickname"><br>
+        <div class="warning" id="nicknameWarning">Only letters and numbers allowed.</div>
+        <textarea id="message" placeholder="Your Message"></textarea><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div class="loading" id="loading" style="display:none;">Submitting...</div>
+    <div class="message" id="responseMessage"></div>
+
+    <script>
+        const form = document.getElementById("contactForm");
+        const loading = document.getElementById("loading");
+        const responseMsg = document.getElementById("responseMessage");
+        const nicknameInput = document.getElementById("nickname");
+        const nicknameWarning = document.getElementById("nicknameWarning");
+
+        // Restrict nickname to letters and numbers only
+        nicknameInput.addEventListener("input", () =>
+        {
+            const valid = /^[A-Za-z0-9]*$/.test(nicknameInput.value);
+            nicknameWarning.style.display = valid ? "none" : "block";
+
+            if (!valid)
+            {
+                nicknameInput.value = nicknameInput.value.replace(/[^A-Za-z0-9]/g, "");
+            }
+        });
+
+        form.addEventListener("submit", e =>
+        {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const nickname = nicknameInput.value.trim();
+            const message = document.getElementById("message").value.trim();
+
+            if (!name || !nickname || !message)
+            {
+                responseMsg.textContent = "Please fill in all fields.";
+                responseMsg.style.color = "tomato";
+                return;
+            }
+
+            loading.style.display = "block";
+            responseMsg.textContent = "";
+
+            fetch("https://jsonplaceholder.typicode.com/posts", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, nickname, message })
+            })
+            .then(response =>
+            {
+                if (!response.ok) throw new Error("Network error");
+                return response.json();
+            })
+            .then(() =>
+            {
+                loading.style.display = "none";
+                responseMsg.textContent = "Form submitted successfully!";
+                responseMsg.style.color = "hsl(140, 100%, 40%)";
+                form.reset();
+            })
+            .catch(() =>
+            {
+                loading.style.display = "none";
+                responseMsg.textContent = "Submission failed. Try again later.";
+                responseMsg.style.color = "hsl(0, 100%, 40%)";
+            });
+        });
+    </script>
+
+</body>
+</html>
