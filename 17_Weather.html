@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather App</title>
+    <style>
+        body
+        {
+            font-family: Trebuchet MS;
+            background: linear-gradient(160deg, hsl(210, 60%, 15%), hsl(220, 40%, 25%));
+            color: white;
+            height: 100vh;
+            margin: 2%;
+        }
+        .weather-box
+        {
+            background-color: hsl(0, 0%, 15%);
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.4);
+        }
+        input
+        {
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+            width: 80%;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        button
+        {
+            padding: 10px;
+            width: 100%;
+            background-color: hsl(210, 100%, 30%);
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover
+        {
+            background-color: hsl(210, 100%, 40%);
+            transition-duration: 200ms;
+        }
+        .error
+        {
+            color: tomato;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Weather App</h2>
+
+    <div class="weather-box">
+        <input type="text" id="cityInput" placeholder="Enter city name">
+        <button id="getWeather">Get Weather</button>
+
+        <div id="weatherResult" style="margin-top:15px;"></div>
+        <div class="error" id="errorMsg"></div>
+    </div>
+
+    <script>
+        const btn = document.getElementById("getWeather");
+        const cityInput = document.getElementById("cityInput");
+        const result = document.getElementById("weatherResult");
+        const errorMsg = document.getElementById("errorMsg");
+
+        btn.addEventListener("click", () =>
+        {
+            const city = cityInput.value.trim();
+            result.innerHTML = "";
+            errorMsg.textContent = "";
+
+            if (city === "")
+            {
+                errorMsg.textContent = "Please enter a city name.";
+                return;
+            }
+
+            fetch(`https://wttr.in/${city}?format=j1`)
+            .then(res => res.json())
+            .then(data =>
+            {
+                const weather = data.current_condition[0];
+                const temp = weather.temp_C;
+                const feelsLike = weather.FeelsLikeC;
+                const humidity = weather.humidity;
+                const desc = weather.weatherDesc[0].value;
+                const icon = desc.toLowerCase().includes("rain") ? "🌧️" :
+                             desc.toLowerCase().includes("cloud") ? "☁️" :
+                             desc.toLowerCase().includes("sun") ? "☀️" :
+                             desc.toLowerCase().includes("snow") ? "❄️" : "🌡️";
+
+                result.innerHTML =
+                    `<h3>${city}</h3>
+                     <p style="font-size:40px;">${icon}</p>
+                     <p><b>${desc}</b></p>
+                     <p>Temperature: ${temp}°C</p>
+                     <p>Feels Like: ${feelsLike}°C</p>
+                     <p>Humidity: ${humidity}%</p>`;
+            })
+            .catch(() =>
+            {
+                errorMsg.textContent = "Could not fetch weather data.";
+            });
+        });
+    </script>
+
+</body>
+</html>
