@@ -1,0 +1,1111 @@
+--------------------------------------------------------------13-------------------------------------------------------------promise
+const prom = new Promise (
+    (resolve, reject) => {
+        setTimeout (() => {
+                console.log("After 2 seconds");
+            },
+            2
+        );
+        resolve;
+    }
+);
+--------------------------------multiple apis
+async function fetchMultipleAPIs() 
+{
+  const urls = 
+  [
+    'https://jsonplaceholder.typicode.com/posts/1',
+    'https://jsonplaceholder.typicode.com/posts/2',
+    'https://jsonplaceholder.typicode.com/posts/3'
+  ];
+
+  const promises = urls.map(url => fetch(url).then(res => res.json()));
+
+  const results = await Promise.all(promises);
+
+  console.log(results);
+}
+
+fetchMultipleAPIs();
+----------------------------callbacks
+async function fetchMultipleAPIs() 
+{
+  const urls = 
+  [
+    'https://jsonplaceholder.typicode.com/posts/1',
+    'https://jsonplaceholder.typicode.com/posts/2',
+    'https://jsonplaceholder.typicode.com/posts/3'
+  ];
+
+  const promises = urls.map(url => fetch(url).then(res => res.json()));
+
+  const results = await Promise.all(promises);
+
+  console.log(results);
+}
+
+fetchMultipleAPIs();
+---------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<title>Background Color Changer</title>
+<style>
+	body
+	{
+		color: hsl(0, 0%, 90%);
+		background-color: hsl(233, 100%, 50%);
+		font-family: 'Trebuchet MS';
+	}
+</style>
+</head>
+<body>
+<h2>Please Select Background Color</h2>
+<form>
+	<input type = "radio" id = "white" name = "bckgrndclr">
+	<label for = "white">White</label><br>
+	<input type = "radio" id = "black" name = "bckgrndclr">
+	<label for = "black">Black</label><br>
+	<input type = "radio" id = "bluegray" name = "bckgrndclr">
+	<label for = "bluegray">Blue-Gray</label><br>
+</form>
+<script>
+	const selectedColor = document.querySelectorAll('input[name="bckgrndclr"]');
+
+    selectedColor.forEach((radio) => 
+	{
+      radio.addEventListener('change', function() 
+	  {
+        if (this.id === 'white') 
+		{
+			document.body.style.backgroundColor = 'hsl(0, 0%, 90%)';
+			document.body.style.color = 'hsl(0 ,0%, 5%)';
+        } 
+        else if (this.id === 'black') 
+		{
+			document.body.style.backgroundColor = 'hsl(0, 0%, 5%)';
+			document.body.style.color = 'hsl(0, 0%, 90%)';
+        } 
+        else if (this.id === 'bluegray') 
+		{
+			document.body.style.backgroundColor = 'hsl(240, 15%, 15%)';
+			document.body.style.color = 'hsl(0%, 0%, 85%)';
+        }
+      });
+    });
+</script>
+<p>This is some text</p>
+</body>
+</html>
+--------------------------------------------------------------------------14---------------------------------observer pattern
+class NewsPublisher {
+  constructor() {
+    this.subscribers = [];
+  }
+
+  subscribe(subscriber) {
+    this.subscribers.push(subscriber);
+    console.log(`Subscribed: ${subscriber.name || 'Anonymous Subscriber'}`);
+  }
+
+  unsubscribe(subscriber) {
+    this.subscribers = this.subscribers.filter(sub => sub !== subscriber);
+    console.log(`Unsubscribed: ${subscriber.name || 'Anonymous Subscriber'}`);
+  }
+
+  notify(news) {
+    console.log(`News Website: "${news}"`);
+    this.subscribers.forEach(sub => sub(news));
+  }
+}
+
+function subscriberA(news) {
+  console.log(`Subscriber A received: ${news}`);
+}
+
+function subscriberB(news) {
+  console.log(`Subscriber B received: ${news}`);
+}
+--------------------------introduction person
+function Person(name)
+{
+    this.name = name;
+}
+
+Person.prototype.introduction = function()
+{
+    console.log(`My name is ${this.name}`)
+}
+
+const a = new Person("John");
+const b = new Person("Arthur");
+
+a.introduction();
+b.introduction();
+----------------------------------shape and inheritance
+class Shape
+{
+    constructor(name, sides)
+    {
+        this.name = name;
+        this.sides = sides;
+    }
+
+    draw()
+    {
+        console.log(`Drawing a generic shape named ${this.name} with ${this.sides} sides.`);
+    }
+}
+
+class Circle extends Shape
+{
+    constructor(radius)
+    {
+        super("Circle", 0);
+        this.radius = radius;
+    }
+
+    draw()
+    {
+        console.log(`Drawing a circle with radius ${this.radius}.`);
+    }
+}
+
+class Square extends Shape
+{
+    constructor(sideLength)
+    {
+        super("Square", 4);
+        this.sideLength = sideLength;
+    }
+
+    draw()
+    {
+        console.log(`Drawing a square with ${this.sides} sides, each of length ${this.sideLength}.`);
+    }
+}
+
+const shape = new Shape("Generic Shape", 5);
+const circle = new Circle(10);
+const square = new Square(6);
+
+shape.draw();
+circle.draw();
+square.draw();
+-------------------------------------------------------------------15 task app
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List App</title>
+    <style>
+        body
+        {
+            font-family: Trebuchet MS, sans-serif;
+            background-color: hsl(240, 10%, 15%);
+            color: hsl(0, 0%, 90%);
+            margin: 40px;
+            zoom: 130%;
+            
+        }
+        input, button, select
+        {
+            font-family: Trebuchet MS;
+        }
+        h1
+        {
+            text-align: center;
+        } 
+
+        .container
+        {
+            max-width: 500px;
+            margin: auto;
+            background: hsl(240, 15%, 20%);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .container:hover
+        {
+            border: 3px solid hsl(240, 60%, 30%);
+            transition-duration: 400ms;
+        }
+
+        input, select, button
+        {
+            margin: 10px;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        ul
+        {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li
+        {
+            background: hsl(240, 20%, 10%);;
+            padding: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px;
+        }
+
+        li.completed
+        {
+            text-decoration: line-through;
+        }
+
+        .priority-high
+        {
+            border-left: 2px solid hsl(0, 100%, 40%);
+        }
+
+        .priority-medium
+        {
+            border-left: 2px solid hsl(30, 100%, 40%);
+        }
+
+        .priority-low
+        {
+            border-left: 2px solid hsl(140, 100%, 40%);
+        }
+
+        .filters
+        {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .filters select
+        {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <input type="text" id="taskInput" placeholder="Enter a new task">
+        <select id="prioritySelect">
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        </select>
+        <button id="addTaskBtn">Add Task</button>
+
+        <div class="filters">
+            <select id="filterPriority">
+                <option value="All">All Priorities</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+
+            <select id="filterStatus">
+                <option value="All">All Tasks</option>
+                <option value="Completed">Completed</option>
+                <option value="Pending">Pending</option>
+            </select>
+        </div>
+
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        const taskInput = document.getElementById("taskInput");
+        const prioritySelect = document.getElementById("prioritySelect");
+        const addTaskBtn = document.getElementById("addTaskBtn");
+        const taskList = document.getElementById("taskList");
+        const filterPriority = document.getElementById("filterPriority");
+        const filterStatus = document.getElementById("filterStatus");
+
+        let tasks = [];
+
+        function renderTasks()
+        {
+            taskList.innerHTML = "";
+
+            const filteredTasks = tasks.filter(task =>
+            {
+                const priorityMatch = filterPriority.value === "All" || task.priority === filterPriority.value;
+                const statusMatch = filterStatus.value === "All" ||
+                    (filterStatus.value === "Completed" && task.completed) ||
+                    (filterStatus.value === "Pending" && !task.completed);
+                return priorityMatch && statusMatch;
+            });
+
+            filteredTasks.forEach((task, index) =>
+            {
+                const li = document.createElement("li");
+                li.classList.add(`priority-${task.priority.toLowerCase()}`);
+                if (task.completed)
+                    li.classList.add("completed");
+
+                const text = document.createElement("span");
+                text.textContent = task.name;
+                text.style.flex = "1";
+                text.onclick = function()
+                {
+                    editTask(index);
+                };
+
+                const completeBtn = document.createElement("button");
+                completeBtn.textContent = task.completed ? "Undo" : "Complete";
+                completeBtn.onclick = function()
+                {
+                    toggleComplete(index);
+                };
+
+                const deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "Delete";
+                deleteBtn.onclick = function()
+                {
+                    deleteTask(index);
+                };
+
+                li.appendChild(text);
+                li.appendChild(completeBtn);
+                li.appendChild(deleteBtn);
+                taskList.appendChild(li);
+            });
+        }
+
+        function addTask()
+        {
+            const name = taskInput.value.trim();
+            const priority = prioritySelect.value;
+
+            if (name === "")
+            {
+                alert("Please enter a task name.");
+                return;
+            }
+
+            tasks.push
+            (
+                {
+                    name: name,
+                    priority: priority,
+                    completed: false
+                }
+            );
+
+            taskInput.value = "";
+            renderTasks();
+        }
+
+        function editTask(index)
+        {
+            const newName = prompt("Edit task name:", tasks[index].name);
+            if (newName !== null && newName.trim() !== "")
+            {
+                tasks[index].name = newName.trim();
+                renderTasks();
+            }
+        }
+
+        function toggleComplete(index)
+        {
+            tasks[index].completed = !tasks[index].completed;
+            renderTasks();
+        }
+
+        function deleteTask(index)
+        {
+            tasks.splice(index, 1);
+            renderTasks();
+        }
+
+        addTaskBtn.onclick = addTask;
+        filterPriority.onchange = renderTasks;
+        filterStatus.onchange = renderTasks;
+    </script>
+</body>
+</html>
+---------------------------------------16a dynamic list
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dynamic List Example</title>
+	<style>
+		body 
+		{
+			font-family: Trebuchet MS;
+			background-color: hsl(240, 15%, 10%);
+			color: hsl(0, 0%, 90%);
+			margin: 30px;
+		}
+		li 
+		{
+			background-color: hsl(0, 0%, 15%);
+			padding: 5px;
+			margin: 5px;
+			border-radius: 10px;
+		}
+		button 
+		{
+			padding: 10px;
+			background-color: hsl(140, 100%, 30%);
+			color: white;
+			border-radius: 5px;
+		}
+		button:hover
+		{
+			border: 2px dashed white;
+			transition-duration: 300ms;
+		}
+	</style>
+</head>
+<body>
+
+<h2>Dynamic List</h2>
+<ul id="itemList">
+</ul>
+<button id="newItemButton">Add New Item</button>
+
+<script>
+
+	const addButton = document.querySelector('#newItemButton');
+	const list = document.querySelector('#itemList');
+
+	addButton.addEventListener('click', () => 
+	{
+		const newItem = document.createElement('li');
+		newItem.textContent = "New Item";
+		newItem.addEventListener('click', () => 
+		{
+			const newName = prompt("What name: ", newItem.textContent);
+			if (newName !== null && newName.trim() !== "") newItem.textContent = newName;
+		});
+		list.appendChild(newItem);
+	});
+
+</script>
+
+</body>
+</html>
+
+------------------------------------- 16b image carousel
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Carousel</title>
+    <style>
+        body
+        {
+            font-family: Trebuchet MS;
+            background-color: hsl(240, 15%, 10%);
+            color: hsl(0, 0%, 90%);
+            margin: 40px;
+        }
+        .carousel
+        {
+            position: relative;
+            width: 500px;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .carousel img
+        {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+            border-radius: 10px;
+            transition: opacity 0.5s ease;
+        }
+        .carousel img.active
+        {
+            display: block;
+        }
+        .controls
+        {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        button
+        {
+            padding: 10px 15px;
+            background-color: hsl(210, 100%, 30%);
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+		.playBtn
+		{
+			background-color: hsl(140, 100%, 30%);
+		}
+		.pauseBtn
+		{
+			background-color: hsl(0, 100%, 30%);
+		}
+        button:hover
+        {
+            border: 2px solid white;
+            transition-duration: 300ms;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Interactive Image Carousel</h2>
+
+    <div class="carousel" id="carousel">
+        <img src="https://picsum.photos/id/1067/500/300" class="active">
+        <img src="https://picsum.photos/id/1039/500/300">
+        <img src="https://picsum.photos/id/1043/500/300">
+    </div>
+
+    <div class="controls">
+        <button id="prvBtn">Previous Button</button>
+        <button id="nextBtn">Next Image</button>
+        <button id="playBtn" class = "playBtn">Play</button>
+        <button id="pauseBtn" class = "pauseBtn">Pause</button>
+    </div>
+
+    <script>
+        const images = document.querySelectorAll('#carousel img');
+        const prvBtn = document.querySelector('#prvBtn');
+        const nextBtn = document.querySelector('#nextBtn');
+        const playBtn = document.querySelector('#playBtn');
+        const pauseBtn = document.querySelector('#pauseBtn');
+        const carousel = document.querySelector('#carousel');
+        let index = 0, autoplay = null, startX = 0, endX = 0;
+
+        function showImage(i)
+        {
+            images.forEach(img => img.classList.remove('active'));
+            images[i].classList.add('active');
+        }
+
+        nextBtn.addEventListener('click', () =>
+        {
+            index = (index + 1) % images.length;
+            showImage(index);
+			playBtn.style.border = "0px";
+			pauseBtn.style.border = "0px";
+        });
+
+        prvBtn.addEventListener('click', () =>
+        {
+            index = (index - 1 + images.length) % images.length;
+            showImage(index);
+			playBtn.style.border = "0px";
+			pauseBtn.style.border = "0px";
+        });
+
+        playBtn.addEventListener('click', () =>
+        {
+            if (!autoplay)
+            {
+                autoplay = setInterval(() =>
+                {
+                    index = (index + 1) % images.length;
+                    showImage(index);
+                }, 500);
+            }
+			playBtn.style.border = "2px solid white";
+			pauseBtn.style.border = "0px";
+        });
+
+        pauseBtn.addEventListener('click', () =>
+        {
+            clearInterval(autoplay);
+            autoplay = null;
+			pauseBtn.style.border = "2px solid white";
+			playBtn.style.border = "0px";
+        });
+
+        carousel.addEventListener('mouseover', () =>
+        {
+            carousel.style.border = "1px solid white";
+        });
+
+        carousel.addEventListener('mouseout', () =>
+        {
+            carousel.style.border = "0px";
+        });
+    </script>
+
+</body>
+</html>
+-------------------------------------------- 17 weather app
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather App</title>
+    <style>
+        body
+        {
+            font-family: Trebuchet MS;
+            background: linear-gradient(160deg, hsl(210, 60%, 15%), hsl(220, 40%, 25%));
+            color: white;
+            height: 100vh;
+            margin: 2%;
+        }
+        .weather-box
+        {
+            background-color: hsl(0, 0%, 15%);
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.4);
+        }
+        input
+        {
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+            width: 80%;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        button
+        {
+            padding: 10px;
+            width: 100%;
+            background-color: hsl(210, 100%, 30%);
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover
+        {
+            background-color: hsl(210, 100%, 40%);
+            transition-duration: 200ms;
+        }
+        .error
+        {
+            color: tomato;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Weather App</h2>
+
+    <div class="weather-box">
+        <input type="text" id="cityInput" placeholder="Enter city name">
+        <button id="getWeather">Get Weather</button>
+
+        <div id="weatherResult" style="margin-top:15px;"></div>
+        <div class="error" id="errorMsg"></div>
+    </div>
+
+    <script>
+        const btn = document.getElementById("getWeather");
+        const cityInput = document.getElementById("cityInput");
+        const result = document.getElementById("weatherResult");
+        const errorMsg = document.getElementById("errorMsg");
+
+        btn.addEventListener("click", () =>
+        {
+            const city = cityInput.value.trim();
+            result.innerHTML = "";
+            errorMsg.textContent = "";
+
+            if (city === "")
+            {
+                errorMsg.textContent = "Please enter a city name.";
+                return;
+            }
+
+            fetch(`https://wttr.in/${city}?format=j1`)
+            .then(res => res.json())
+            .then(data =>
+            {
+                const weather = data.current_condition[0];
+                const temp = weather.temp_C;
+                const feelsLike = weather.FeelsLikeC;
+                const humidity = weather.humidity;
+                const desc = weather.weatherDesc[0].value;
+                const icon = desc.toLowerCase().includes("rain") ? "🌧️" :
+                             desc.toLowerCase().includes("cloud") ? "☁️" :
+                             desc.toLowerCase().includes("sun") ? "☀️" :
+                             desc.toLowerCase().includes("snow") ? "❄️" : "🌡️";
+
+                result.innerHTML =
+                    `<h3>${city}</h3>
+                     <p style="font-size:40px;">${icon}</p>
+                     <p><b>${desc}</b></p>
+                     <p>Temperature: ${temp}°C</p>
+                     <p>Feels Like: ${feelsLike}°C</p>
+                     <p>Humidity: ${humidity}%</p>`;
+            })
+            .catch(() =>
+            {
+                errorMsg.textContent = "Could not fetch weather data.";
+            });
+        });
+    </script>
+
+</body>
+</html>
+-----------------------------------18 quiz
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Quiz App</title>
+    <style>
+        body
+        {
+            font-family: Trebuchet MS;
+            background-color: hsl(240, 15%, 10%);
+            color: hsl(0, 0%, 90%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .quiz-box
+        {
+            background-color: hsl(0, 0%, 15%);
+            padding: 20px 30px;
+            border-radius: 10px;
+            width: 400px;
+            text-align: left;
+            box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.5);
+            transition: background-color 0.4s;
+        }
+        h2
+        {
+            text-align: center;
+        }
+        button
+        {
+            padding: 10px;
+            width: 100%;
+            margin-top: 10px;
+            background-color: hsl(210, 100%, 30%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover
+        {
+            background-color: hsl(210, 100%, 40%);
+        }
+        .option
+        {
+            margin: 8px 0;
+        }
+        .feedback
+        {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .timer
+        {
+            text-align: right;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: hsl(140, 100%, 50%);
+        }
+        .fade-bg
+        {
+            background-color: hsl(0, 0%, 10%) !important;
+			color: hsl(0, 0%, 10%) !important;
+			button
+			{
+				background-color: hsl(0, 0%, 10%) !important;
+				color: hsl(0, 0%, 10%) !important;
+			}
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-box" id="quizBox">
+        <div class="timer" id="timer"></div>
+        <h2 id="questionText"></h2>
+        <div id="options"></div>
+        <button id="submitBtn">Submit</button>
+        <div class="feedback" id="feedback"></div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "What is the primary constituent of organic compounds?",
+                options: ["Oxygen", "Nitrogen", "Carbon", "Hydrogen"],
+                answer: 2
+            },
+            {
+                question: "Who discovered gravity?",
+                options: ["Albert Einstein", "Isaac Newton", "Galileo Galilei", "Nikola Tesla"],
+                answer: 1
+            },
+            {
+                question: "Demo Question 1",
+                options: ["Wrong", "Wrong", "Wrong", "Correct"],
+                answer: 3
+            },
+            {
+                question: "Demo Question 2",
+                options: ["Wrong", "Wrong", "Correct", "Wrong"],
+                answer: 2
+            }
+        ];
+
+        const questionText = document.getElementById("questionText");
+        const optionsBox = document.getElementById("options");
+        const submitBtn = document.getElementById("submitBtn");
+        const feedback = document.getElementById("feedback");
+        const timerDisplay = document.getElementById("timer");
+        const quizBox = document.getElementById("quizBox");
+
+        let current = 0;
+        let score = 0;
+        let timer = 10;
+        let interval;
+
+        function loadQuestion()
+        {
+            quizBox.classList.add("fade-bg");
+            setTimeout(() =>
+            {
+                const q = quizData[current];
+                questionText.textContent = q.question;
+                optionsBox.innerHTML = "";
+                q.options.forEach((opt, i) =>
+                {
+                    const div = document.createElement("div");
+                    div.classList.add("option");
+                    div.innerHTML = `<label><input type="radio" name="option" value="${i}"> ${opt}</label>`;
+                    optionsBox.appendChild(div);
+                });
+                feedback.textContent = "";
+                timer = 10;
+                startTimer();
+                quizBox.classList.remove("fade-bg");
+            }, 400);
+        }
+
+        function startTimer()
+        {
+            clearInterval(interval);
+            timerDisplay.textContent = timer;
+            interval = setInterval(() =>
+            {
+                timer--;
+                timerDisplay.textContent = timer;
+                if (timer <= 0)
+                {
+                    clearInterval(interval);
+                    handleSubmit();
+                }
+            }, 1000);
+        }
+
+        function handleSubmit()
+        {
+            clearInterval(interval);
+            const selected = document.querySelector('input[name="option"]:checked');
+            if (!selected)
+            {
+                feedback.textContent = "Select an option!";
+                feedback.style.color = "tomato";
+                startTimer();
+                return;
+            }
+
+            const answer = parseInt(selected.value);
+            if (answer === quizData[current].answer)
+            {
+                score++;
+                feedback.textContent = "Correct!";
+                feedback.style.color = "hsl(140, 70%, 30%)";
+            }
+            else
+            {
+                feedback.textContent = "Wrong!";
+                feedback.style.color = "hsl(0, 100%, 40%)";
+            }
+
+            setTimeout(nextQuestion, 800);
+        }
+
+        function nextQuestion()
+        {
+            current++;
+            if (current < quizData.length)
+            {
+                loadQuestion();
+            }
+            else
+            {
+                showScore();
+            }
+        }
+
+        function showScore()
+        {
+            quizBox.innerHTML =
+                `<h2>Quiz Complete</h2>
+                 <p>Your Score: ${score} / ${quizData.length}</p>`;
+        }
+
+        submitBtn.addEventListener("click", handleSubmit);
+
+        loadQuestion();
+    </script>
+
+</body>
+</html>
+----------------------------------- 19 ajax
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AJAX Form Submission</title>
+    <style>
+        body
+        {
+            font-family: Trebuchet MS;
+            background-color: hsl(240, 15%, 10%);
+            color: hsl(0, 0%, 90%);
+            margin: 60px;
+        }
+        h2
+        {
+            margin-bottom: 20px;
+        }
+        input, textarea
+        {
+            width: 300px;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: none;
+            background-color: hsl(0, 0%, 20%);
+            color: white;
+        }
+        button
+        {
+            padding: 10px 20px;
+            background-color: hsl(210, 100%, 30%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover
+        {
+            background-color: hsl(210, 100%, 40%);
+        }
+        .loading
+        {
+            color: hsl(45, 100%, 60%);
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .message
+        {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .warning
+        {
+            color: tomato;
+            font-size: 13px;
+            margin-top: -5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Contact Form</h2>
+    <form id="contactForm">
+        <input type="text" id="name" placeholder="Your Name"><br>
+        <input type="text" id="nickname" placeholder="Your Nickname"><br>
+        <div class="warning" id="nicknameWarning">Only letters and numbers allowed.</div>
+        <textarea id="message" placeholder="Your Message"></textarea><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div class="loading" id="loading" style="display:none;">Submitting...</div>
+    <div class="message" id="responseMessage"></div>
+
+    <script>
+        const form = document.getElementById("contactForm");
+        const loading = document.getElementById("loading");
+        const responseMsg = document.getElementById("responseMessage");
+        const nicknameInput = document.getElementById("nickname");
+        const nicknameWarning = document.getElementById("nicknameWarning");
+
+        // Restrict nickname to letters and numbers only
+        nicknameInput.addEventListener("input", () =>
+        {
+            const valid = /^[A-Za-z0-9]*$/.test(nicknameInput.value);
+            nicknameWarning.style.display = valid ? "none" : "block";
+
+            if (!valid)
+            {
+                nicknameInput.value = nicknameInput.value.replace(/[^A-Za-z0-9]/g, "");
+            }
+        });
+
+        form.addEventListener("submit", e =>
+        {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const nickname = nicknameInput.value.trim();
+            const message = document.getElementById("message").value.trim();
+
+            if (!name || !nickname || !message)
+            {
+                responseMsg.textContent = "Please fill in all fields.";
+                responseMsg.style.color = "tomato";
+                return;
+            }
+
+            loading.style.display = "block";
+            responseMsg.textContent = "";
+
+            fetch("https://jsonplaceholder.typicode.com/posts", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, nickname, message })
+            })
+            .then(response =>
+            {
+                if (!response.ok) throw new Error("Network error");
+                return response.json();
+            })
+            .then(() =>
+            {
+                loading.style.display = "none";
+                responseMsg.textContent = "Form submitted successfully!";
+                responseMsg.style.color = "hsl(140, 100%, 40%)";
+                form.reset();
+            })
+            .catch(() =>
+            {
+                loading.style.display = "none";
+                responseMsg.textContent = "Submission failed. Try again later.";
+                responseMsg.style.color = "hsl(0, 100%, 40%)";
+            });
+        });
+    </script>
+
+</body>
+</html>
+
